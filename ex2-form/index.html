@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Form</title>
+</head>
+<body>
+	<form id="form-validate">
+		<input type="text" placeholder="Digite seu nome" >
+		<input type="email" autofocus>
+		
+		<input type="range" min="10" max="100" step="10" id="nota" value="10">
+		<button id="mais">+</button> <button id="menos">-</button>
+		<input type="number" min="100" max="1000" step="100">
+		
+		<fieldset>
+		<label for="mail">Email:</label></label>
+		<input type="email" name="mail" id="mail">
+		</fieldset>
+		
+		<input type="submit" value="Enviar">
+	</form>
+	<script>
+		window.addEventListener("load",function(){
+		var nota = document.getElementById("nota");
+		var btMais = document.getElementById("mais");
+	var btMenos = document.getElementById("meno");
+			nota.addEventListener("change",function(){
+		console.log("nota :", nota.value);
+		})
+		
+btMais.addEventListener("click",function(){
+			nota.stepUp();
+		})
+		
+		document.getElementById("form-validate").addEventListener("submit",function(e){
+		console.log(e);
+		e.preventDefault();
+		
+		})
+		})
+		
+	</script>
+</body>
+</html>

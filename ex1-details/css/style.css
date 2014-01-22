@@ -1,0 +1,59 @@
+details {
+	border-radius: 3px;
+	padding: 5px;
+}
+
+details:first-child{
+
+}
+summary {
+	border-radius: 3px;
+	border: 1px solid #ddd;
+	padding: 5px;
+	outline: none;
+	/*background:url(../img/parse.jpg);*/
+}
+details[open] {
+	background: #ddd;
+	border: 1px solid #333;
+}
+details[open] summary {
+	border: none;
+}
+
+input:focus:invalid{ }
+
+
+
+/* 
+
+Exercício
+
+Criar formulário 
+
+1 - input text id: nome
+2 - input email id: email
+3 - input tel id: telefone
+4 - input range id: nota1 0 ... 10 
+5 - input range id: nota2 0 ... 10
+
+
+6 - No submit validar as informações 
+e exibir a média o usuário em uma tag meter
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+*/

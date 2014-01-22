@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<audio id="audio-loop" src="audio/loop.wav" autoplay loop></audio>
+	
+	<audio id="audio-shot" src="audio/shot.mp3"></audio>
+
+	<button id="bt-mais">+</button>
+	<button id="bt-menos">-</button>
+	<button id="bt-shot"> > </button>
+	
+	<script>
+		var loop,shot;
+		window.addEventListener("load",function(){
+			loop = document.getElementById("audio-loop");
+			shot = document.getElementById("audio-shot");
+			
+			//console.log(loop.volume);
+			
+			document.getElementById("bt-shot").addEventListener("click",function(){
+				shot.play();
+			})
+			
+			document.getElementById("bt-mais").addEventListener("click",function(){
+			if((loop.volume + 0.1)<= 1){
+				loop.volume += 0.1
+			}
+			})
+			
+			document.getElementById("bt-menos").addEventListener("click",function(){
+			if((loop.volume - 0.1)>= 0){
+				loop.volume -= 0.1
+				}
+			})
+		})
+	</script>
+</body>
+</html>

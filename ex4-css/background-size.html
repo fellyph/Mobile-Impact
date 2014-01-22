@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.box{
+			width:100px;
+			height:100px;
+			background:url(img/img.jpg);
+			margin: 10px;
+			float:left;
+			overflow:hidden;
+			border-radius:50%;
+			background-repeat:no-repeat;
+			box-shadow: inset 10px 10px 10px #ccc;
+		}
+		
+		.box.auto{
+			background-size: 100px 50px;
+		}
+		
+		.box.cover{
+			background-size:cover;
+		}
+		
+		.box.contain{
+			background-size:contain;
+		}
+		
+		.box:hover{
+			/*-webkit-transform:rotateX(30deg); */
+			border-radius:50%;
+			border-color:#CCC;
+		}
+	</style>
+</head>
+<body>
+	<div class="box auto"></div>
+	<div class="box cover"></div>
+	<div class="box contain"></div>
+	<div class="box"></div>
+	<img class="img-round" src="img/img.jpg" width="100px" height="auto">
+	
+</body>
+</html>

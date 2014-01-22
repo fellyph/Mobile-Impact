@@ -1,0 +1,86 @@
+<script>
+
+
+
+app = {}
+app.banco = {};
+app.banco.db = null
+
+const dbName = "notas";
+var version = 1;
+
+	app.indexDB.open = function(){
+			var request = indexDB.open(dbName,version);
+			
+			// essa função é disparada quando a versão do banco muda
+			request.onupgradeneeded = function(e){
+				var db = e.target.result;
+				e.target.transaction.error = app.indexDB.onerror;
+			
+				if(db.objectStoreNames.contains("nota")){
+					db.deleteObjectStore("nota");
+				}
+				
+				//definir a key do elemento seu timestamp
+				var store = db.createObjectStore("nota", {keyPath:"timeStamp"});
+			}
+
+		//caso sucesso
+			request.onsuccess =	function(e){
+				console.log("sucesso",e)
+				app.indexDB.db = e.target.result;
+				app.indexDB.getAllTodoItems();
+				//
+			}
+			
+			//caso erro
+			request.onerror = app.indexDB.onerror;
+};
+
+app.banco.addNota = function(nota, materia, semestre){
+	var db = app.indexDB.db;
+	var trans = db.transaction(["nota"],"readwhite");
+	var store = trans.objectStore("nota");
+
+	var request = store.put({
+			"nota": nota,
+			"materia": materia,
+			"timestamp": new Date().getTime()
+	});
+
+	request.onsuccess = function(e){
+		app.indexDB.getAllItens();
+	}
+
+	request.onerror = function(e){
+		console.log(e)
+	};
+}; // fim addNota
+
+
+app.indexDB.getAllItens = function(){
+	var todos = document.getElementById("lista-notas");
+	todos.innerHTML = "";
+
+	var db = app.indexDB.db;
+	var trans = db.transaction(["nota"],"readwhite");
+	var store = trans.objectStore("todo");
+
+	var keyRange = IDBKeyRange.lowerBound(0);
+	var cursorRequest = store.openCursor(keyRange);
+
+	cursorRequest.onsuccess = function(e){
+				var result = e.target.result;
+				if(!!result == false){
+					return;
+				}
+				renderTodo(result.value);
+				result.continue();
+			}
+			
+	cursorRequest.onerror = app.indexDB.onerror;
+
+}
+
+
+</script>

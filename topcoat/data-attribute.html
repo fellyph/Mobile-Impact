@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Data Attribute</title>
+	<link rel="stylesheet" href="css/topcoat-mobile-dark.min.css">
+</head>
+
+<style>
+	#carro{
+		height: 300px;
+		width:100%;
+		overflow:hidden;
+		transition: height 300ms linear;
+	}
+	#carro.escondido{
+		height: 0px;
+	}
+	
+	.item-lista{
+		cursor:pointer;
+	}
+</style>
+<body>
+	<div id="content" class="container">
+	
+		<div id="carro" class="escondido">
+			<header>
+				<h2>Carro Selecionado</h2>
+			</header>
+			
+			<strong>Modelo:</strong> <span id="out-carro"></span><br/>
+			<strong>Ano: </strong> <span id="out-ano"></span><br/>
+			<strong>Montadora: </strong> <span id="out-montadora"></span><br/>
+			<button id="bt-fechar">Fechar</button>
+		</div>
+		<div class="topcoat-list">
+		<h3 class="topcoat-list__header">Carros</h3>
+		<ul class="topcoat-list__container">
+			<li class="item-lista topcoat-list__item" data-montadora="ford" data-ano="2010"> ecosport </li>
+			<li class="item-lista topcoat-list__item" data-montadora="fiat" data-ano="2010"> Uno </li>
+			<li class="item-lista topcoat-list__item" data-montadora="fiat" data-ano="2010"> Palio </li>
+		</ul>
+		</div>		
+	</div>
+	
+	
+	<!-- ul>li.item-lista[data-ano=""][data-montadora=""]*4 -->
+	<script>
+		var arrayItens;
+		var carro, 
+		outModelo,
+		outAno,
+		outMotadora;
+		
+		window.addEventListener("load",function(){
+			
+			arrayItens = document.getElementsByClassName("item-lista");
+			carro = document.getElementById("carro");
+			
+			outAno = document.getElementById("out-ano");
+			outModelo = document.getElementById("out-carro");
+			outMotadora = document.getElementById("out-montadora");
+			
+			console.log(arrayItens);
+			
+			for(var i = 0; i< arrayItens.length; i++){
+				arrayItens[i].addEventListener("click",function(){
+					
+					outAno.innerHTML = this.dataset.ano;
+					outModelo.innerHTML = this.innerHTML;
+					outMotadora.innerHTML = this.dataset.montadora;
+					
+					carro.className = ""
+				});
+			}
+			
+			 
+			
+			
+		})
+	</script>
+</body>
+</html>

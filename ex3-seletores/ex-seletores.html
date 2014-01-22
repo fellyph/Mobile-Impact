@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		
+		a[href$=".br"]{
+			color:green;
+		}
+		
+		
+		a[href$=".br"]:after{
+			content:"HUe";
+		}
+		
+		a:not([href*="jornada"]){
+			text-decoration:line-through;
+		}	
+		
+		li:last-child a {
+			text-decoration:none;
+			padding:10px;
+			border-bottom:1px solid #ddd;
+		}	
+		
+	</style>
+</head>
+
+<body>
+ <ul>
+ 	<li><a href="http://google.com.br">teste 1</a></li>
+ 	<li><a href="http://developer.blackberry.com">BB DEV US</a></li>
+ 	<li><a href="www.jornadaadobe.com">JORNADA</a></li>
+ 	<li><a href="http://google.com">teste 2</a></li>
+ 	<li><a href="http://maceio.com.br">teste 3</a></li>
+ 	<li><a href="">teste 4</a></li>
+ 	<li><a href="http://blackberrydeveloper.com.br">BB DEV BR</a></li>
+ </ul>
+</body>
+
+</html>

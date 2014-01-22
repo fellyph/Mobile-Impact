@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Index DB</title>
+</head>
+<body>
+	<h2>Cadastro de Tasks</h2>
+	
+		<ul id="todoItens">
+			
+		</ul>
+		
+		<hr/>
+		<hr/>
+		
+		<input type="text" required name="todo" id="todo">
+		<input type="submit" value="Salvar" onclick="addTodo()">
+
+	<script>
+		var app = {};
+		app.indexDB = {};
+		
+		app.indexDB.db = null;
+		//abrindo a conexao com o banco
+		
+		app.indexDB.open = function(){
+			console.log("open")
+			var version = 3;
+			var request = indexedDB.open("todos",version);
+			
+			// essa função é disparada quando a versão do banco muda
+			request.onupgradeneeded = function(e){
+				var db = e.target.result;
+				e.target.transaction.error = app.indexDB.onerror;
+			
+				//
+				if(db.objectStoreNames.contains("todo")){
+					db.deleteObjectStore("todo");
+				}
+				
+				//definir a key do elemento seu timestamp
+				var store = db.createObjectStore("todo", {keyPath:"timeStamp"});
+			}
+			
+			//caso sucesso
+			request.onsuccess =	function(e){
+				console.log("sucesso",e)
+				app.indexDB.db = e.target.result;
+				app.indexDB.getAllTodoItems();
+				//
+			}
+			
+			//caso erro
+			request.onerror = app.indexDB.onerror;
+		};
+		
+		//função para adicionar um item
+		app.indexDB.addTodo = function(todoText){
+			var db = app.indexDB.db;
+			var trans = db.transaction(["todo"],"readwrite");
+			var store = trans.objectStore("todo");
+			
+			var request = store.put({
+				"text": todoText,
+				"novo": "teste",
+				"timeStamp" : new Date().getTime()
+			});
+			
+			request.onsuccess = function(e){
+				app.indexDB.getAllTodoItems();
+			}
+			
+			request.onerror = function(e){
+				console.log(e.value)
+			};	
+		};
+		
+		//função para listar todos os itens
+		app.indexDB.getAllTodoItems = function(){
+			var todos = document.getElementById("todoItens");
+			todos.innerHTML = "";
+			
+			var db = app.indexDB.db;
+			var trans = db.transaction(["todo"],"readwrite");
+			var store = trans.objectStore("todo");
+			
+			// pegando todos os dados no banco;
+			var keyRange = IDBKeyRange.lowerBound(0);
+			var cursorRequest = store.openCursor(keyRange);
+			
+			
+			cursorRequest.onsuccess = function(e){
+				var result = e.target.result;
+				if(!!result == false){
+					return;
+				}
+				renderTodo(result.value);
+				result.continue();
+			}
+			
+			cursorRequest.onerror = app.indexDB.onerror;
+		};
+		
+		// função para deletar um item
+		app.indexDB.deleteTodo = function(id){
+			var db = app.indexDB.db;
+			var trans = db.transaction(["todo"],"readwrite");
+			var store = trans.objectStore("todo");
+			
+			var request = store.delete(id);
+			
+			request.onsuccess = function(e){
+				console.log("success",e);
+				app.indexDB.getAllTodoItems();
+			}
+			
+			request.onerror = function(e){
+				console.log(e);
+			};
+		};
+		
+		// função para listar um item
+		function renderTodo(row){
+			var todos = document.getElementById("todoItens");
+			var li 	= document.createElement("li");
+			var a 	= document.createElement("a");
+			var t 	= document.createTextNode();
+			t.data 	= row.text;
+			
+			a.addEventListener("click",function(e){
+				app.indexDB.deleteTodo(row.timeStamp);
+				e.preventDefault();
+			});
+			a.href = "#"
+			a.textContent = "[Delete]";
+			
+			li.appendChild(t);
+			li.appendChild(a);
+			
+			todos.appendChild(li)
+				
+		}
+		
+		var formTodo;
+		var inputTodo;
+		
+		function init(){
+			app.indexDB.open();
+			inputTodo = document.getElementById("todo");
+		}
+		
+		function addTodo(){
+			app.indexDB.addTodo(inputTodo.value)
+			inputTodo.value = "";
+		}
+		
+		window.addEventListener("DOMContentLoaded",init,false);
+	</script>
+</body>
+</html>

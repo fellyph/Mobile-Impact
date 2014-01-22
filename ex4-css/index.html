@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.img-round,
+		.box{
+			width:100px;
+			height:100px;
+			background:green;
+			margin: 10px;
+			float:left;
+			overflow:hidden;
+			border-radius:50%;
+			border:4px transparent solid;	
+		}
+		.img-round:hover,
+		.box:hover{
+			/*-webkit-transform:rotateX(30deg); */
+			border-radius:50%;
+			border-color:#CCC;
+		}
+		
+	</style>
+</head>
+<body>
+	<div class="box"><img src="img/img.jpg" width="100px" height="auto"></div>
+	<div class="box"></div>
+	<div class="box"></div>
+	<div class="box"></div>
+	<img class="img-round" src="img/img.jpg" width="100px" height="auto">
+	
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	
+	<script>
+/*	window.addEventListener("load",function(){
+	console.log(document.getElementById("form"));
+*/	
+	</script>
+</head>
+<body>
+	
+	
+	<form id="form">
+		<input type="text" id="nome" name="nome" required>
+		<input type="submit">
+	</form>
+	
+	<script>
+		var formulario;
+		var validacao;
+		
+		window.addEventListener("load",function(){
+			
+			formulario = document.getElementById("form")
+			validacao = formulario.validity;	formulario.addEventListener("submit",function(e){
+			console.log(e);
+			console.log(formulario.validity);
+			e.preventDefault()
+			})		
+		
+//converter em inteiro - parsetInt()
+		})
+		
+	</script>
+</body>
+</html>

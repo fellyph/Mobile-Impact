@@ -1,0 +1,32 @@
+fieldset{
+	border:none;
+	border-bottom:1px solid #ccc;
+	padding:10px;
+}
+
+input{
+	border:1px solid #333;
+	border-left:4px solid #ccc;
+	background:#fff;
+	padding:3px;
+	outline:none;
+}
+
+input:required{
+	border-left:4px solid blue;
+}
+
+input:focus:invalid{
+	border-left:4px solid red;
+}
+
+
+
+
+
+
+
+
+input[type="submit"]{
+	border-left:1px solid #333;
+}

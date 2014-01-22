@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	
+	<style>
+		.some{
+			display:none;
+		}
+		#user{
+			padding:10px;
+			box-sizing:border-box;
+			margin:auto;
+			width:320px;
+			border:1px solid #ccc;
+			box-shadow: 2px 2px 1px #999;
+		}
+		
+		#out-foto{
+			border-radius:50%;
+			margin: 10px auto;
+			display:block;
+			width:200px;
+			height:auto;
+		}
+		
+		#bt-excluir{
+			float:right;
+			background:red;
+			color:white;
+			font-weight:bold;
+			border:none;
+			height:20px;
+		}
+	</style>
+</head>
+<body>
+	
+	<div id="user">
+		<img id="out-foto">
+		<strong>nome :</strong> <span id="out-nome"></span><br/>
+		<strong>email :</strong> <span id="out-email"></span><br/>
+		
+		<button id="bt-excluir">Excluir</button>
+	</div>
+	
+	<form id="form-user">
+		<input type="text" id="nome" name="nome" placeholder="digite seu nome aqui"><hr/>
+		<input type="email" id="mail" name="mail" placeholder="digite seu email aqui"><hr/>
+		<input type="file" id="image">
+		<input type="submit" value="salvar">
+	</form>
+	
+	<script>
+		var nome, 
+		email,
+		outNome,
+		outEmail,
+		outFoto,
+		formulario,
+		usuario,
+		foto,
+		fonteFoto;
+		
+		window.addEventListener("load",function(){
+			nome = document.getElementById("nome");
+			email = document.getElementById("mail");
+			
+			formulario = document.getElementById("form-user")
+			usuario = document.getElementById("user")
+			
+			outNome = document.getElementById("out-nome");
+			outEmail = document.getElementById("out-email");
+			outFoto = document.getElementById("out-foto");
+			
+			btExcluir = document.getElementById("bt-excluir");
+			
+			if(localStorage.getItem("user")){
+				//existe
+				var user = JSON.parse(localStorage.getItem("user"));
+				
+				console.log(user)
+				outEmail.innerHTML = user.mail;
+				outNome.innerHTML = user.name;
+				
+				outFoto.src = "data:image/png;base64," + user.foto;
+				formulario.className = "some"
+				usuario.className = ""
+			}else{
+				//nao existe
+				formulario.className = ""
+				usuario.className = "some"
+			}
+			btExcluir.addEventListener("click",onRemove)
+			formulario.addEventListener("submit",onSubmit)
+		})
+		function onRemove(e){
+			localStorage.removeItem("user")
+			
+			formulario.className = ""
+			usuario.className = "some"
+		}
+		function onSubmit(e){
+			var reader = new FileReader(),
+			binary, base64;
+			
+			var user = {}
+			user.name = nome.value;
+			user.mail = email.value;
+			
+			//pegando o input file
+			foto = document.getElementById('image');
+			fonteFoto = foto.files[0];
+			//pegando o primeiro item do inputFile
+			
+			reader.addEventListener('loadend', function () {
+					
+					binary = reader.result; // arquivo em formato binario
+					base64 = btoa(binary); // base64 data
+					user.foto = base64;
+					
+					outFoto.src = "data:image/png;base64," + user.foto;
+					
+					localStorage.setItem("user",JSON.stringify(user))
+				});
+				
+			reader.readAsBinaryString(fonteFoto);
+		
+			outEmail.innerHTML = mail.value;
+			outNome.innerHTML = nome.value;
+			
+			formulario.className = "some";
+			usuario.className = "";
+				
+			e.preventDefault();
+		}
+		
+		function loadImg(){
+		var srcImg = "data:image/png;base64," + localStorage.getItem("imagem") 
+		document.getElementById('foto-user').setAttribute( 'src',  srcImg)
+			
+		}
+		
+		function saveImg(){
+			
+
+				// convertendo o arquivo
+				
+			}
+		
+		// ------ para remover um dado no local storage -----
+		//localStorage.removeItem("name")
+		
+		//localStorage.setItem("nome","Mobile")
+	</script>
+	
+</body>
+</html>

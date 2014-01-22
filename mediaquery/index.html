@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+
+<style>
+
+.box{
+	width:200px;
+	height:200px;
+	background:green;
+}
+/* Smartphones ----------- */
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+	
+	.box{
+		background:red;
+	}
+}
+
+@media (orientation : landscape) {
+	
+	body{
+		background:red;
+	}
+}
+
+
+
+
+/*
+
+dois box 
+- quando estiver em landscape eles 
+dividem a tela com 48% largura
+- quando estiver em portrait eles 
+ficam um baixo do outros 100% de largura
+*/
+
+
+
+
+
+*/
+
+
+@media 
+(-webkit-min-device-pixel-ratio: 1){
+.profile{
+  	 background:url("img_normal.jpg")
+		}
+		
+	}
+	
+@media 
+(-webkit-min-device-pixel-ratio: 2), 
+(min-resolution: 192dpi) { 
+  .profile{
+  	 background:url("img_hd.jpg")
+		}
+}
+
+
+</style>
+<body>
+	
+	<div class="profile" ></div>
+	<div class="box">
+		
+	</div>
+	
+</body>
+</html>

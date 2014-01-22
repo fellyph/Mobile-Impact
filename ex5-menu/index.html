@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+			font-family:sans-serif;
+		}
+		
+		.app-title{
+			background-image:-webkit-linear-gradient(top, #03a0d7,#088cbc )
+		}
+		
+		.app-title h2{
+			padding:10px 0;
+			color:white;
+			text-shadow: 1px 1px 1px #333;
+		}
+		
+		#container{
+			overflow-x:hidden;
+			overflow-y:scroll;
+			width:100%;
+			height:400px;
+			position:relative;
+		}
+		.contact-list li{
+			padding:10px 2px;
+			font-size:20px;
+			border-bottom:1px solid #ccc;
+		}
+		
+		.contact-list .header-list{
+			border-bottom:2px solid #088cbc;
+			padding:5px 0;
+			font-weight:bold;
+		}
+		
+		.footer-app{
+			height:50px;
+			background-image:-webkit-linear-gradient(top,#313131 ,#272727);
+			position:fixed;
+			width:100%;
+			bottom:0;
+		}
+		
+		.link-menu{
+			background:transparent;
+			color:#fff;
+			border:none;
+			padding:10px;
+			cursor:pointer;
+			outline:none;
+		}
+		.menu-app{
+			position:absolute;
+			width:300px;
+			left:-300px;
+			background:#333;
+			height:100%;
+			top:0;
+			transition:left 400ms linear;
+		}
+		
+		.ativo .menu-app{
+			left:0;
+		}
+		
+		.contact-list{
+			position:absolute;
+			top:50px;
+			left:0;
+			transition:left 400ms linear;
+			width:100%;	
+		}
+
+		.ativo .contact-list{
+			left:300px;
+		}
+		
+		.item-menu{
+			padding:10px 0;
+			border-bottom:1px solid #f3f3f3;
+		}
+		.item-menu a{
+			color:#f3f3f3;
+			text-decoration:none;
+			font-size:16px;
+		}
+	</style>
+</head>
+<body>
+	<div id="container" class="ativo">
+		<section>
+			<header class="app-title">
+				<h2>BlackBerry Hub</h2>
+			</header>
+			<ul class="contact-list">
+				<li class="header-list">Sábado 20 dezembro</li>
+				<li>João</li>
+				<li>Maria</li>
+				<li>José</li>
+				<li>Túlio</li>
+			</ul>
+			<nav class="menu-app">
+				<ul>
+					<li class="item-menu"><a href="">link 1</a></li>
+					<li class="item-menu"><a href="">link 2</a></li>
+					<li class="item-menu"><a href="">link 3</a></li>
+					<li class="item-menu"><a href="">link 4</a></li>
+					<li class="item-menu"><a href="">link 5</a></li>
+				</ul>
+			</nav>
+			<footer class="footer-app">
+				<button class="link-menu">Menu</button>
+			</footer>
+		</section>
+	</div>
+	<script>
+		window.addEventListener("load",function(){
+			var container = document.getElementById("container");
+			
+			document.querySelector(".link-menu").addEventListener("click",function(){
+				container.className = (container.className == "ativo")? "" : "ativo"; 
+			})
+		})
+	</script>
+</body>
+</html>

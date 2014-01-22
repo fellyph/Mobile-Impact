@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Controlando Vídeo</title>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    
+    <style>
+        #meu-filme{
+            width:100%;
+            height:auto;
+        }
+    </style>
+    
+    <script>
+        window.addEventListener("load",function(){
+            var filme = document.getElementById("meu-filme");    
+            var btplay = document.getElementById("btn-play"); 
+            var btpause = document.getElementById("btn-pause");
+            var myIterval = {};
+            var progressBar = document.querySelector('[role="progressbar"]');
+            var progress = document.getElementById("progress");
+            
+            var timeTotal  = document.getElementById("time-total");
+            var timeParcial  = document.getElementById("time-parcial");
+            
+            progress.addEventListener("click",function(e){
+                
+                filme.currentTime = (e.offsetX/this.offsetWidth)*filme.duration;
+                setaBarra(parseInt(e.offsetX/this.offsetWidth * 100));
+            })
+            
+            btpause.disabled = true; 
+            
+            filme.addEventListener("ended", function(){
+                btplay.disabled = false; 
+                btpause.disabled = true;
+                clearInterval(myIterval);
+                setaBarra(100);
+            })
+            
+            btplay.addEventListener("click",function(){
+                filme.play();
+                btplay.disabled = true; 
+                btpause.disabled = false;
+                setaBarra(0);
+                myIterval = window.setInterval(atualizaProgress, 100);
+            })
+            
+            btpause.addEventListener("click",function(){
+                filme.pause();
+                btplay.disabled = false; 
+                btpause.disabled = true;
+                clearInterval(myIterval); 
+            })
+            
+            function atualizaProgress(){
+                var pc = parseInt((filme.currentTime/filme.duration)*100);
+                setaBarra(pc);
+                
+                timeParcial.innerHTML = converTempo(filme.currentTime);
+                timeTotal.innerHTML = converTempo(filme.duration);
+                //console.log(progressBar);
+                //console.log(pc);
+            }
+            
+            function setaBarra(pc){
+                progressBar.setAttribute("aria-valuenow",pc);
+                progressBar.setAttribute("style", "width: " + pc + "%");
+            }
+            
+            function converTempo(tempo){
+                console.log(tempo)
+                segundos = parseInt((tempo)%60);
+                segundos = (segundos < 10)? "0" + segundos : segundos;
+                minutos = parseInt((tempo)/60);
+                minutos = (minutos < 10)? "0" + minutos : minutos;
+                
+                tempoString = minutos + ":" + segundos;
+                return tempoString;
+            }
+        })
+        
+        
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Player de Vídeo</h1>
+        <div class="row">
+            <video id="meu-filme" src="vid/bg_invert.mp4"></video>
+            <h2><span id="time-total">00:00</span> / <span id="time-parcial">00:00</span></h2>
+        </div>
+        <div class="row">
+            <div class="progress progress-striped" id="progress">
+  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+  </div>
+</div>
+        </div>
+        <div class="row">
+            <button  class="btn btn-primary btn-lg" id="btn-play">play</button>
+            <button  class="btn btn-primary btn-lg" id="btn-pause">pause</button>
+        </div>
+    </div>
+    
+</body>
+</html>

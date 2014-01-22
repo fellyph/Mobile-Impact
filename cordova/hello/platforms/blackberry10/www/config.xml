@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.mobile.impact" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:rim="http://www.blackberry.com/ns/widgets">
+    
+    <feature name="com.blackberry.pim.lib" />
+    <feature name="com.blackberry.utils" />
+    <feature name="Contacts" value="Contacts" />
+    
+    <rim:permissions>
+        <rim:permit>access_pimdomain_contacts</rim:permit>
+        <rim:permit>read_device_identifying_information</rim:permit>
+    </rim:permissions>
+    
+    <feature name="Device" value="Device" />
+    <name>Mobile Impact Maceió</name>
+    
+    <description>
+       Este App foi desenvolvido na jornada adobe
+    </description>
+    
+    <author email="dev@cordova.apache.org" href="http://cordova.io">
+        Equipe Jornada
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+</widget>
