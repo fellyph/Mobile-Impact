@@ -1,27 +1,12 @@
 <!doctype html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Document</title>
-</head>
-<body>
-	
-	
-	<script src="js/parse-1.2.12.min.js"></script>
-        <script type="text/javascript">
-            Parse.initialize("LUJcWvuLzi7Y7tqeKjAdFirU62jh8JCvMRcdW4Vc", "kP75lRJcItwAIwy1O9r3eofBuWuJez2fZTJJ9DE2");
-
-            var MyObject = Parse.Object.extend("MyObject");    
-            var test = new MyObject();
-            
-              test.save({nome: "Fellyph Cintra",
-                   email:"email",
-                   idade:30, 
-                   skills:["HTML5", "JS", "PHP",
-                   ]}).then(function(object) {
-                  alert("Informação salva com sucesso!");
-            });
-        
-        </script>
-</body>
+  <head>
+    <meta charset="UTF-8">
+    <title>Salvando primeiros dados no parse</title>
+    <script src="js/parse-1.2.12.min.js"></script>
+    <script src="js/first-example.js"></script>
+  </head>
+  <body>
+    <h1>Gravando os primeiros dados no Parse</h1>
+  </body>
 </html>
