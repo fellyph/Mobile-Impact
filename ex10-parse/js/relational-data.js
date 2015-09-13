@@ -5,7 +5,8 @@ Parse.initialize("2fCYJxTlUgudJlmCFKjYLkvaZCE2xukZoPef87GY", "xR6psxbG0H2KtwKAsC
 var PostObject = Parse.Object.extend("Post"),
     Comment = Parse.Object.extend("Comment"),
     post = new PostObject(),
-    commentForm;
+    commentForm,
+    postsResult;
 
 /* Criando um Post para depois relacionar os comentários
 post.save({
@@ -20,12 +21,50 @@ window.addEventListener("load", function() {
 	commentForm  = document.querySelector("#comment-form");
 	// adicionando o evento para acompanhar qualquer envio do formulário
 	commentForm.addEventListener("submit", sendComment);
+    loadAllPosts();
 })
 
+
+function loadAllPosts() {
+    //chamamos a função Query do Parse parar varer a nossa base
+    var query = new Parse.Query("Post");
+
+    //a função trata a query para sucesso ou erro de nossa consulta
+    query.find({
+        success: function(results){
+            showPosts(results);
+        },
+        error: function(error){
+            //tratamento para caso de erro
+            console.log("error", error);
+        }
+    });
+}
+
+function showPosts(results) {
+    postsResult = results;
+    postsResult.forEach(function(post) {
+        createPost(post);
+    });
+    
+}
+
+function createPost(post) {
+    
+}
+
 //
-function sendComment(event){
+function sendComment(event) {
 	event.preventDefault();
+    var target = event.srcElement || event.target;
     var comment = new Comment();
+    comment.save({
+        name: target.name.value,
+        email: target.email.value,
+        message: target.message.value
+    }).then(function(result){
+        console.log(result);
+    })
     console.log(event);
     //comment.save({});
 }
