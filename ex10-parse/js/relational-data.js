@@ -2,23 +2,17 @@ Parse.initialize("2fCYJxTlUgudJlmCFKjYLkvaZCE2xukZoPef87GY", "xR6psxbG0H2KtwKAsC
 
 
 // Criando as variáveis que iremos trabalhar
-var PostObject = Parse.Object.extend("Post"),
+var Post = Parse.Object.extend("Post"),
     Comment = Parse.Object.extend("Comment"),
-    post = new PostObject(),
+    post = new Post(),
     commentForm,
+    posts,
     postsResult;
-
-/* Criando um Post para depois relacionar os comentários
-post.save({
-	title: "Meu Post",
-	content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum in leo eu urna euismod commodo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id urna ac ex aliquet eleifend a et dolor. Phasellus bibendum eleifend magna." 
-}).then(function(object) {
-    console.log(object);
-}); */
 
 window.addEventListener("load", function() {
     // selecionando o  form que irá enviar os comentários
 	commentForm  = document.querySelector("#comment-form");
+    posts = document.querySelector(".posts");
 	// adicionando o evento para acompanhar qualquer envio do formulário
 	commentForm.addEventListener("submit", sendComment);
     loadAllPosts();
@@ -46,11 +40,16 @@ function showPosts(results) {
     postsResult.forEach(function(post) {
         createPost(post);
     });
-    
 }
 
 function createPost(post) {
+    var htmlMarkup = "<article data-id='" + post.id + "'>" +
+                    "<h2>" + post.attributes.title + "</h2>" + 
+                    "<p>" + post.attributes.content + "</p>" +
+                    "</article>";
     
+    posts.innerHTML += htmlMarkup;
+    commentForm.dataset.id = post.id;
 }
 
 //
@@ -58,10 +57,13 @@ function sendComment(event) {
 	event.preventDefault();
     var target = event.srcElement || event.target;
     var comment = new Comment();
+    var post = new Post();
+    post.id = target.dataset.id;
     comment.save({
         name: target.name.value,
         email: target.email.value,
-        message: target.message.value
+        message: target.message.value,
+        parentPost: post 
     }).then(function(result){
         console.log(result);
     })
