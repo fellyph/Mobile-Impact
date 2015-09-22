@@ -21,8 +21,8 @@ var app = {
 
     loadAllPosts: function() {
         //chamamos a função Query do Parse parar varer a nossa base
-        var query = new Parse.Query("Post");
-
+        var query = new Parse.Query(app.Post);
+        query.equalTo("objectId", "TnSDUrpREk"); 
         //a função trata a query para sucesso ou erro de nossa consulta
         query.find({
             success: function(results){
@@ -64,9 +64,28 @@ var app = {
             message: target.message.value,
             parentPost: post
         }).then(function(result){
-            console.log(result);
+            app.loadComments(post);
         })
-        console.log(event);
+    },
+    
+    loadComments: function(post) {
+        var query = new Parse.Query(app.Comments);
+        query.equalTo("post",post.id)
+        //vamos realizar uma query para resgatar todos os comentários
+        query.find({
+            //caso sucesso exibimos os nossos comentários
+            success: function(results){
+                app.showComments(results);
+            },
+            error: function(error){
+                //tratamento para caso de erro
+                console.log("error", error);
+            }
+        });
+    },
+    
+    showComments: function(results) {
+    
     }
 };
 
